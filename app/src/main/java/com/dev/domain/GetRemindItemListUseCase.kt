@@ -1,8 +1,8 @@
 package com.dev.domain
 
-class GetRemindItemListUseCase {
+class GetRemindItemListUseCase(private val  reminderItemRepository: ReminderItemRepository) {
 
     fun getReminderItemList(): List<ReminderItem>{
-        TODO()
+        return reminderItemRepository.getReminderItemList()
     }
 }

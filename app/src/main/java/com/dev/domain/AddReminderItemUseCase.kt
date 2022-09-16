@@ -1,8 +1,8 @@
 package com.dev.domain
 
-class AddReminderItemUseCase {
+class AddReminderItemUseCase(private val  reminderItemRepository: ReminderItemRepository) {
 
     fun addReminderItem(item: ReminderItem) {
-        TODO()
+        reminderItemRepository.addReminderItem(item)
     }
 }

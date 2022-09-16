@@ -1,8 +1,8 @@
 package com.dev.domain
 
-class GetReminderItemByIdUseCase {
+class GetReminderItemByIdUseCase(private val  reminderItemRepository: ReminderItemRepository) {
 
     fun getReminderItemById (id: Int): ReminderItem {
-        TODO()
+        return reminderItemRepository.getReminderItemById(id)
     }
 }

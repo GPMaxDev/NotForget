@@ -1,8 +1,8 @@
 package com.dev.domain
 
-class DeleteReminderItemUseCase {
+class DeleteReminderItemUseCase (private val  reminderItemRepository: ReminderItemRepository) {
 
     fun deleteReminderItemByID (item: ReminderItem){
-        TODO()
+        reminderItemRepository.deleteReminderItemByID(item)
     }
 }
