@@ -2,7 +2,7 @@ package com.dev.domain
 
 class EditReminderItemUseCase {
 
-    fun editReminderItemUSECase(id: Int) : ReminderItem {
+    fun editReminderItemUSECase(item: ReminderItem) {
         TODO()
 
     }
