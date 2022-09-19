@@ -8,6 +8,13 @@ object ReminderItemRepositoryImpl: ReminderItemRepository {
     private val reminderList = mutableListOf<ReminderItem>()
     private var autoIncrementID = 0
 
+    init {
+        for (i in 0 until 10){
+            val rem = ReminderItem("Name $i", 0.0,0.0, 0, false, true)
+            addReminderItem(rem)
+        }
+    }
+
 
     override fun addReminderItem(item: ReminderItem) {
         if (item.id == ReminderItem.UNDEFINED_ID) {

@@ -6,7 +6,7 @@ interface ReminderItemRepository {
 
     fun deleteReminderItemByID (item: ReminderItem)
 
-    fun editReminderItemUSECase(item: ReminderItem)
+    fun editReminderItemUseCase(item: ReminderItem)
 
     fun getReminderItemList(): List<ReminderItem>
 
