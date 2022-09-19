@@ -17,24 +17,19 @@ class MainViewModel(application: Application) : AndroidViewModel(application)/* 
     private val editReminderItemUseCase = EditReminderItemUseCase(repository)
     private val getRemindItemListUseCase = GetRemindItemListUseCase(repository)
 
-    val reminderList = MutableLiveData<List<ReminderItem>>()
+    val reminderList = getRemindItemListUseCase.getReminderItemList()
 
-    fun getReminderList(){
 
-        val listOfReminder = getRemindItemListUseCase.getReminderItemList()
-        reminderList.postValue(listOfReminder)
-
-    }
 
     fun deleteReminderItem(reminderItem: ReminderItem){
         deleteReminderItemUseCase.deleteReminderItemByID(reminderItem)
-        getReminderList()
+
     }
 
     fun changeEnableState(reminderItem: ReminderItem){
         val newReminder = reminderItem.copy(purchased = !reminderItem.purchased)
         editReminderItemUseCase.editReminderItemUseCase(newReminder)
-        getReminderList()
+
     }
 
 }

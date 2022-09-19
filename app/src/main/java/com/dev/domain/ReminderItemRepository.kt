@@ -1,5 +1,7 @@
 package com.dev.domain
 
+import androidx.lifecycle.LiveData
+
 interface ReminderItemRepository {
 
     fun addReminderItem(item: ReminderItem)
@@ -8,7 +10,7 @@ interface ReminderItemRepository {
 
     fun editReminderItemUseCase(item: ReminderItem)
 
-    fun getReminderItemList(): List<ReminderItem>
+    fun getReminderItemList(): LiveData<List<ReminderItem>>
 
     fun getReminderItemById (id: Int): ReminderItem
 }

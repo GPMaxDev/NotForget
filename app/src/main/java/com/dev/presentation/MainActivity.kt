@@ -16,9 +16,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewModel.reminderList.observe(this){
-            Log.d("mainAktivityTest", it.toString())
+            Log.d("mainActivityTest", it.toString())
         }
-
-        viewModel.getReminderList()
     }
 }

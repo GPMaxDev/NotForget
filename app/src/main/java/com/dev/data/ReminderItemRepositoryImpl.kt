@@ -1,12 +1,16 @@
 package com.dev.data
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.dev.domain.ReminderItem
 import com.dev.domain.ReminderItemRepository
 
 object ReminderItemRepositoryImpl: ReminderItemRepository {
 
+    private val remListLiveData = MutableLiveData<List<ReminderItem>>()
     private val reminderList = mutableListOf<ReminderItem>()
     private var autoIncrementID = 0
+
 
     init {
         for (i in 0 until 10){
@@ -21,24 +25,31 @@ object ReminderItemRepositoryImpl: ReminderItemRepository {
             item.id = autoIncrementID++
         }
         reminderList.add(item)
+        updateList()
     }
 
     override fun deleteReminderItemByID(item: ReminderItem) {
         reminderList.remove(item)
+        updateList()
     }
 
-    override fun editReminderItemUSECase(item: ReminderItem) {
+    override fun editReminderItemUseCase(item: ReminderItem) {
         val oldElement = getReminderItemById(item.id)
         reminderList.remove(oldElement)
         addReminderItem(item)
     }
 
-    override fun getReminderItemList(): List<ReminderItem> {
-        return reminderList.toList()
+    override fun getReminderItemList(): LiveData<List<ReminderItem>> {
+        return remListLiveData
     }
 
     override fun getReminderItemById(id: Int): ReminderItem {
         return reminderList.find { it.id == id } ?: throw RuntimeException("Element with id $id not found")
+    }
+
+    private fun updateList(){
+        remListLiveData.postValue(reminderList.toList())
+
     }
 
 
