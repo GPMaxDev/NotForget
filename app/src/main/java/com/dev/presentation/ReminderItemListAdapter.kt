@@ -31,8 +31,9 @@ class ReminderItemListAdapter :
 
     override fun onBindViewHolder(viewHolder: ReminderItemViewHolder, position: Int) {
         val reminderItem = reminderList[position]
+
         viewHolder.view.setOnLongClickListener {
-            true
+                 true
         }
         viewHolder.tvName.text = reminderItem.name
         viewHolder.tvDistance.text = reminderItem.distance_to.toString()
@@ -65,6 +66,7 @@ class ReminderItemListAdapter :
     companion object {
         const val VIEW_TYPE_ENABLED = 1
         const val VIEW_TYPE_DISABLED = 0
+        const val MAX_POOL_SIZE = 15
 
     }
 }

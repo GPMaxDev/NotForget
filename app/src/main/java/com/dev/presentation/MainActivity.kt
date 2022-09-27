@@ -3,14 +3,9 @@ package com.dev.presentation
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.TextureView
-import android.widget.TextView
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.dev.R
-import com.dev.domain.ReminderItem
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
@@ -18,7 +13,7 @@ import com.google.android.gms.ads.MobileAds
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainViewModel
-    lateinit var mAdView: AdView
+    private lateinit var mAdView: AdView
     private lateinit var rVAdapter: ReminderItemListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,9 +36,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         val rvReminderList = findViewById<RecyclerView>(R.id.recyclerView)
-        rVAdapter = ReminderItemListAdapter()
-        rvReminderList.adapter = rVAdapter
-
+        with(rvReminderList) {
+            rVAdapter = ReminderItemListAdapter()
+            adapter = rVAdapter
+            recycledViewPool.setMaxRecycledViews(
+                ReminderItemListAdapter.VIEW_TYPE_ENABLED,
+                ReminderItemListAdapter.MAX_POOL_SIZE
+            )
+            recycledViewPool.setMaxRecycledViews(
+                ReminderItemListAdapter.VIEW_TYPE_DISABLED,
+                ReminderItemListAdapter.MAX_POOL_SIZE
+            )
+        }
     }
 
 
