@@ -10,6 +10,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainViewModel
@@ -51,6 +52,12 @@ class MainActivity : AppCompatActivity() {
         rVAdapter.onReminderItemClickListener = {
             viewModel.changeEnableState(it)
         }
+
+        rVAdapter.onReminderItemShortClickListener ={
+            Log.d("Edit view", "remind item id ${it.id}")
+        }
+
+
     }
 
 

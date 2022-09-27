@@ -17,6 +17,7 @@ class ReminderItemListAdapter :
             notifyDataSetChanged()
         }
         var onReminderItemClickListener: ((ReminderItem)-> Unit)? = null
+        var onReminderItemShortClickListener: ((ReminderItem)-> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReminderItemViewHolder {
         val cellView = when (viewType) {
@@ -36,6 +37,12 @@ class ReminderItemListAdapter :
            onReminderItemClickListener?.invoke (reminderItem)
                  true
         }
+
+        viewHolder.view.setOnClickListener {
+            onReminderItemShortClickListener?.invoke (reminderItem)
+            true
+        }
+
         viewHolder.tvName.text = reminderItem.name
         viewHolder.tvDistance.text = reminderItem.distance_to.toString()
         viewHolder.tvCategory.text = reminderItem.category
@@ -64,10 +71,7 @@ class ReminderItemListAdapter :
 
     }
 
-    interface OnReminderItemLongClickListener{
 
-        fun onReminderItemLongClick(remindItem: ReminderItem)
-    }
 
     companion object {
         const val VIEW_TYPE_ENABLED = 1
