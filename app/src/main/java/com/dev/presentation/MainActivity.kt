@@ -48,6 +48,9 @@ class MainActivity : AppCompatActivity() {
                 ReminderItemListAdapter.MAX_POOL_SIZE
             )
         }
+        rVAdapter.onReminderItemClickListener = {
+            viewModel.changeEnableState(it)
+        }
     }
 
 
