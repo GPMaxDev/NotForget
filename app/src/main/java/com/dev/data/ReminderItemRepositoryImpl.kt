@@ -4,17 +4,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.dev.domain.ReminderItem
 import com.dev.domain.ReminderItemRepository
+import java.util.Random
 
 object ReminderItemRepositoryImpl: ReminderItemRepository {
 
     private val remListLiveData = MutableLiveData<List<ReminderItem>>()
-    private val reminderList = mutableListOf<ReminderItem>()
+    private val reminderList =  sortedSetOf<ReminderItem>({ o1, o2 -> o1.id.compareTo(o2.id)})
+
     private var autoIncrementID = 0
 
 
     init {
-        for (i in 0 until 10){
-            val rem = ReminderItem("Name $i", 0.0,0.0, 0, false, true)
+        for (i in 0 until 100){
+            val rem = ReminderItem("Name $i", 0.0,0.0, 0, "food",kotlin.random.Random.nextBoolean(), true)
             addReminderItem(rem)
         }
     }

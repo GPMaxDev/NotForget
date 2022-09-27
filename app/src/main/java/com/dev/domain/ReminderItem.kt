@@ -5,6 +5,7 @@ data class ReminderItem(
     val latitude: Double,
     val longitude: Double,
     val distance_to: Int,
+    val category: String,
     val purchased: Boolean = false,
     val reminder_on: Boolean = true,
     var id: Int = UNDEFINED_ID,

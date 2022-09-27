@@ -93,6 +93,7 @@
             android:id="@+id/textInputLayout"
             android:layout_width="36dp"
             android:layout_height="18dp"
+            android:hint="@string/s1"
             app:layout_constraintBottom_toBottomOf="@+id/nameRememberTextView"
             app:layout_constraintEnd_toStartOf="@+id/quantityTextView"
             app:layout_constraintTop_toTopOf="@+id/nameRememberTextView">
