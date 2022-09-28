@@ -1,8 +1,10 @@
 package com.dev.presentation
 
+import android.graphics.Canvas
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +12,7 @@ import com.dev.R
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 
 class MainActivity : AppCompatActivity() {
@@ -68,6 +71,10 @@ class MainActivity : AppCompatActivity() {
             0,
             ItemTouchHelper.LEFT
         ) {
+            // experim
+            private val deleteColor = ContextCompat.getColor(baseContext, R.color.deleteCellColor)
+            private val deleteIcon = R.drawable.ic_delete_cell
+
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -77,8 +84,33 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val item = rVAdapter.reminderList[viewHolder.adapterPosition]
+                val item = rVAdapter.reminderList[viewHolder.bindingAdapterPosition]
                 viewModel.deleteReminderItem(item)
+            }
+
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                RecyclerViewSwipeDecorator.Builder(c,recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                    .addSwipeLeftActionIcon(deleteIcon)
+                    .addSwipeLeftBackgroundColor(deleteColor)
+                    .create()
+                    .decorate()
+                super.onChildDraw(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
             }
 
         }
