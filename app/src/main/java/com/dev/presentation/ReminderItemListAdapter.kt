@@ -40,9 +40,8 @@ class ReminderItemListAdapter :
 
         viewHolder.view.setOnClickListener {
             onReminderItemShortClickListener?.invoke (reminderItem)
-            true
-        }
 
+        }
         viewHolder.tvName.text = reminderItem.name
         viewHolder.tvDistance.text = reminderItem.distance_to.toString()
         viewHolder.tvCategory.text = reminderItem.category

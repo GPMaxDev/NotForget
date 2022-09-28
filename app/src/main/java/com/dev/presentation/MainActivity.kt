@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.dev.R
 import com.google.android.gms.ads.AdRequest
@@ -27,12 +28,16 @@ class MainActivity : AppCompatActivity() {
             rVAdapter.reminderList = it
 
         }
-        //reklama baner
+
+        initialiseAdvertisingBanner()
+    }
+
+    private fun initialiseAdvertisingBanner() {
         MobileAds.initialize(this) {}
 
         mAdView = findViewById(R.id.adView)
         val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest) // podumat kak cdelat krasivo
+        mAdView.loadAd(adRequest)
     }
 
     private fun setupRecyclerView() {
@@ -49,15 +54,48 @@ class MainActivity : AppCompatActivity() {
                 ReminderItemListAdapter.MAX_POOL_SIZE
             )
         }
+        setupLongClickListener()
+
+        setupShortClickListener()
+
+        setupSwipeListener(rvReminderList)
+
+
+    }
+
+    private fun setupSwipeListener(rvReminderList: RecyclerView) {
+        val callBack = object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val item = rVAdapter.reminderList[viewHolder.adapterPosition]
+                viewModel.deleteReminderItem(item)
+            }
+
+        }
+        val itemTouchHelper = ItemTouchHelper(callBack)
+        itemTouchHelper.attachToRecyclerView(rvReminderList)
+    }
+
+    private fun setupShortClickListener() {
+        rVAdapter.onReminderItemShortClickListener = {
+            Log.d("Edit view", "remind item id ${it.id}")
+        }
+    }
+
+    private fun setupLongClickListener() {
         rVAdapter.onReminderItemClickListener = {
             viewModel.changeEnableState(it)
         }
-
-        rVAdapter.onReminderItemShortClickListener ={
-            Log.d("Edit view", "remind item id ${it.id}")
-        }
-
-
     }
 
 
