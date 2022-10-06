@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewModel.reminderList.observe(this) {
             Log.d("mainActivityTest", it.toString()) // potom ubrat!!!!
-            rVAdapter.reminderList = it
+            rVAdapter.submitList(it)
 
         }
 
@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val item = rVAdapter.reminderList[viewHolder.bindingAdapterPosition]
+                val item = rVAdapter.currentList[viewHolder.bindingAdapterPosition]
                 viewModel.deleteReminderItem(item)
             }
 

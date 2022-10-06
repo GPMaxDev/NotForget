@@ -1,24 +1,15 @@
 package com.dev.presentation
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ListAdapter
 import com.dev.R
 import com.dev.domain.ReminderItem
 
 class ReminderItemListAdapter :
-    RecyclerView.Adapter<ReminderItemListAdapter.ReminderItemViewHolder>() {
+    ListAdapter<ReminderItem, ReminderItemViewHolder>(ReminderItemObjectDiffCallback()) {
 
-    var reminderList = listOf<ReminderItem>()
-        set(value) {
-            val callback =  ReminderItemDiffCallback(reminderList, value)
-            val diffResult = DiffUtil.calculateDiff(callback)
-            diffResult.dispatchUpdatesTo(this)
-            field = value
-        }
+
         var onReminderItemClickListener: ((ReminderItem)-> Unit)? = null
         var onReminderItemShortClickListener: ((ReminderItem)-> Unit)? = null
 
@@ -34,7 +25,7 @@ class ReminderItemListAdapter :
     }
 
     override fun onBindViewHolder(viewHolder: ReminderItemViewHolder, position: Int) {
-        val reminderItem = reminderList[position]
+        val reminderItem = getItem(position)
 
         viewHolder.view.setOnLongClickListener {
            onReminderItemClickListener?.invoke (reminderItem)
@@ -51,7 +42,7 @@ class ReminderItemListAdapter :
     }
 
     override fun getItemViewType(position: Int): Int {
-        val remindItem = reminderList[position]
+        val remindItem = getItem(position)
 
         return if (!remindItem.purchased) {
             VIEW_TYPE_ENABLED
@@ -61,19 +52,6 @@ class ReminderItemListAdapter :
 
 
     }
-
-    override fun getItemCount(): Int {
-        return reminderList.size
-    }
-
-    class ReminderItemViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        var tvName = view.findViewById<TextView>(R.id.nameRememberTextView)
-        val tvDistance = view.findViewById<TextView>(R.id.distant)
-        val tvCategory = view.findViewById<TextView>(R.id.categoryTextView)
-
-    }
-
-
 
     companion object {
         const val VIEW_TYPE_ENABLED = 1
