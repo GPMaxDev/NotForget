@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dev.R
 import com.dev.domain.ReminderItem
@@ -13,8 +14,10 @@ class ReminderItemListAdapter :
 
     var reminderList = listOf<ReminderItem>()
         set(value) {
+            val callback =  ReminderItemDiffCallback(reminderList, value)
+            val diffResult = DiffUtil.calculateDiff(callback)
+            diffResult.dispatchUpdatesTo(this)
             field = value
-            notifyDataSetChanged()
         }
         var onReminderItemClickListener: ((ReminderItem)-> Unit)? = null
         var onReminderItemShortClickListener: ((ReminderItem)-> Unit)? = null
